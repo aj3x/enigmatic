@@ -4,17 +4,25 @@ using System.Collections;
 public class clock_movement : MonoBehaviour {
     // 5 minutes is 1 unit
     // 1 hour is 12 units
-    public int startTime;
+    //public int startTime;
     public int currentTime;
     public GameObject hour_hand;
     public GameObject min_hand;
+    game_scripts gameScripts;
+    GameObject gameController;
 	// Use this for initialization
 	void Start () {
-        currentTime = startTime;
-	}
+        gameController = GameObject.Find("GameController");
+        gameScripts = gameController.GetComponent<game_scripts>();
+        while (0==gameScripts.getStartTime()) {
+
+            currentTime = gameScripts.getStartTime();
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
+
     }
 
 
