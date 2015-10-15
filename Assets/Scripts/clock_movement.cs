@@ -14,10 +14,7 @@ public class clock_movement : MonoBehaviour {
 	void Start () {
         gameController = GameObject.Find("GameController");
         gameScripts = gameController.GetComponent<game_scripts>();
-        while (0==gameScripts.getStartTime()) {
-
-            currentTime = gameScripts.getStartTime();
-        }
+        currentTime = gameScripts.getStartTime();
     }
 	
 	// Update is called once per frame
