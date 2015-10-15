@@ -39,8 +39,8 @@ public class game_scripts : MonoBehaviour {
         //adjust variables based on difficulty
         lives = (int)(1.5*diff);
         startTime = 12 * 3 + (diff * 12);
-
         clockScript = GameObject.Find("Clock").GetComponent<clock_movement>();
+        clockScript.enabled = true;
         livesHUD = GameObject.Find("lifeText").GetComponent<Text>();
        
 

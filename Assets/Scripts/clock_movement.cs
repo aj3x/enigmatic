@@ -15,6 +15,9 @@ public class clock_movement : MonoBehaviour {
         gameController = GameObject.Find("GameController");
         gameScripts = gameController.GetComponent<game_scripts>();
         currentTime = gameScripts.getStartTime();
+
+
+        updateTime();
     }
 	
 	// Update is called once per frame
