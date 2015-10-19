@@ -1,3 +1,8 @@
+#ignores local library for building
 Library
 
+#ignores temporary files that are being used
 Temp
+
+#ignores 
+.vs
