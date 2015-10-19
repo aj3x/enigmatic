@@ -3,11 +3,19 @@ using System.Collections;
 
 public class characters : MonoBehaviour {
     string firstName;
-    public int weapon;
-    bool isMale;
+    int mySeed;//values to determine what this character's going to do
+    int loyalty;//sets how likely they are to help you
+    int fear;//what you have to beat to get help
+    int fearMax;//if fear is > then trigger events
+    int location;//current location on map
+    int ability;//ability
+    bool isKiller;//is this character the killer
+    bool isDead;//is this character dead
 
 	// Use this for initialization
 	void Start () {
+        loyalty = 0;
+        fear = 0;
 	}
 	
 	// Update is called once per frame
@@ -16,23 +24,17 @@ public class characters : MonoBehaviour {
 	}
 
 
-    /**
-    public string getWeapon() {
-        
-        switch (weapon) {
-            case 0: return "rock"; 
-            case 1: return "knife"; 
-            case 2: return "pistol"; 
-            case 3: return "brass knuckles"; 
-            case 4: return "sword"; 
-            case 5: return "pistol"; 
-            case 6: return "revolver"; 
-            case 7: return "axe"; 
-            case 8: return "rope"; 
-            case 9: return "club"; 
-            default: Debug.LogError("Has weapon not defined by code. Changing to 0.");
-                weapon = 0;
-                return "rock";
-        }
-    }*/
+    //will this person help you
+    public bool willHelp() {
+        return (loyalty > fear);
+    }
+
+
+    //can reveal information they have on other characters or themselves
+    public void useLoyalty(int num) {
+
+    }
+
+
+    
 }
