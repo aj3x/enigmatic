@@ -14,7 +14,7 @@ public class searchable : MonoBehaviour {
 	}
 
     void OnTriggerStay2D(Collider2D coll) {
-        if (coll.name.Equals("playerLook")){
+        if (coll.tag.Equals("Searchable")){
             Debug.Log("Your trigger is working");
         }
     }
