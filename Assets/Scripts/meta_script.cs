@@ -11,7 +11,7 @@ public class meta_script : MonoBehaviour {
         DontDestroyOnLoad(transform.gameObject);
     }
     int difficulty;
-    double seed;
+    public double seed;
 	void Start () {
         difficulty = -1;//difficulty has not been set yet
 	}
@@ -37,28 +37,43 @@ public class meta_script : MonoBehaviour {
     
 
 
-
+    /// <summary>
+    /// Sets the difficulty to paramater
+    /// </summary>
+    /// <param name="num">Difficulty to set to</param>
     void setDifficulty(int num) {
         difficulty = num;
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>Current difficulty</returns>
     public int getDifficulty() {
         return difficulty;
     }
 
 
     void randomSeed() {
-        
+        seed = (double)(Random.Range(0, 10000000000));
     }
 
     void setSeed() {
-        //if(GameObject.Find)
-        //if(GameObject.Find("InputField").GetComponent<InputField>().text) {
-        //    seed = randomSeed;
-        //}
-        //if (num < 0 || num > 9999999999) {
-            
-        //}
+        string temp = GameObject.Find("InputField").GetComponent<InputField>().text;
+        if (temp != "") {
+            double num = double.Parse(temp);
+            if (num != 0 && //If User input a number and
+                (num > 0 || num < 9999999999)) {//number is valid entry
+                seed = num;
+            } else {
+                randomSeed();
+                Debug.Log("Invalid Entry; Took random seed instead");
+            }
+        } else {
+            randomSeed();
+        }
+
     }
 
 

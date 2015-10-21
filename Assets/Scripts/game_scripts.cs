@@ -7,15 +7,12 @@ using UnityEngine.UI;
 /// Controls important game variables such as number of lives
 /// </summary>
 public class game_scripts : MonoBehaviour {
-    //keeps values on restart
+    //keeps values on restart/level load
     void Awake() {
         DontDestroyOnLoad(transform.gameObject);
     }
 
-
-    //debugging variables
-    public bool blolz;
-    public int lolz;
+    
     //standard variables
     int lives;
     int startTime;
@@ -34,11 +31,15 @@ public class game_scripts : MonoBehaviour {
         //Find the Text object and close it
         textBlock = GameObject.Find("Text");
         closeText();
-        //get scripts and such
+
+        //get difficulty
         int diff = GameObject.Find("MetaController").GetComponent<meta_script>().getDifficulty();
+
         //adjust variables based on difficulty
         lives = (int)(1.5*diff);
         startTime = 12 * 3 + (diff * 12);
+
+        //get Scripts
         clockScript = GameObject.Find("Clock").GetComponent<clock_movement>();
         clockScript.enabled = true;
         livesHUD = GameObject.Find("lifeText").GetComponent<Text>();
@@ -52,18 +53,39 @@ public class game_scripts : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        lolz = startTime;
 	}
 
     //Text functions
+    /// <summary>
+    /// Shows the messaging system
+    /// Changes text to display system message
+    /// </summary>
+    /// <param name="message">String of message to be sent</param>
     public void showText(string message) {
         textBlock.GetComponent<Text>().text = message;
         textBlock.SetActive(true);
-
+        
     }
 
+    /// <summary>
+    /// Closes the messaging system
+    /// </summary>
     public void closeText() {
         textBlock.SetActive(false);
+    }
+
+
+    /// <summary>
+    /// Takes an integer and returns the appropriate item in string form
+    /// </summary>
+    /// <param name="num">Index number of the item</param>
+    /// <returns></returns>
+    public string item(int num) {
+        switch (num) {
+            case 1: return "a convenient plot device";
+            case 2: return "the murder weapon";
+            default: return "nothing";
+        }
     }
 
 
@@ -80,6 +102,9 @@ public class game_scripts : MonoBehaviour {
         return startTime;
     }
 
+    /// <summary>
+    /// Loses a life and resets game
+    /// </summary>
     public void loseLife() {
         if (lives > 0) {
             lives--;

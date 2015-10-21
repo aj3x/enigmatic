@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class clues : MonoBehaviour {
-    bool isFindable;//only activate if player has 
+    bool isFindable;//only activate if player has required prerequisites
     int clueType;//
 
 	// Use this for initialization

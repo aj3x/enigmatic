@@ -15,7 +15,10 @@ public class NewBehaviourScript : MonoBehaviour {
 
 
 
-
+    /// <summary>
+    /// returns the index of weapon
+    /// </summary>
+    /// <returns></returns>
     public int getWeaponIndex() {
         return weapon;
     }
@@ -43,6 +46,7 @@ public class NewBehaviourScript : MonoBehaviour {
 
     /// <summary>
     /// Return weapon category 
+    /// also is used to determine how char was murdered
     /// 0 -> strangled
     /// 1 -> shot
     /// 2 -> bludgeoned
@@ -72,8 +76,13 @@ public class NewBehaviourScript : MonoBehaviour {
     2,3,4->blunt        bludgeoned
     5,6,7-> blades      stabbed
     */
+
+    /// <summary>
+    /// Returns the weapon in string form from the index
+    /// </summary>
+    /// <returns>String of weapon</returns>
     public string getWeapon() {
-        switch (weapon) { //rock,shovel pistol knife sword rope revolver club
+        switch (weapon) { 
             case 0: return "fist";
             case 1: return "rope";
             case 2: return "pistol";
@@ -85,7 +94,7 @@ public class NewBehaviourScript : MonoBehaviour {
             case 8: return "rock";
             case 9: return "lamp";
             default:
-                Debug.LogError("Has weapon not defined by code. Changing to fist.");
+                Debug.LogError("This weapon not defined by code. Changing to fist.");
                 weapon = 0;
                 return "fist";
         }

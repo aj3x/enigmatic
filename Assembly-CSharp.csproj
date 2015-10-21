@@ -48,11 +48,13 @@
      <Compile Include="Assets\Scripts\characters.cs" />
      <Compile Include="Assets\Scripts\clock_movement.cs" />
      <Compile Include="Assets\Scripts\clues.cs" />
+     <Compile Include="Assets\Scripts\container.cs" />
      <Compile Include="Assets\Scripts\game_scripts.cs" />
      <Compile Include="Assets\Scripts\killer.cs" />
      <Compile Include="Assets\Scripts\meta_script.cs" />
      <Compile Include="Assets\Scripts\searchable.cs" />
      <Compile Include="Assets\Scripts\weapon.cs" />
+     <Compile Include="Assets\basic_move.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
