@@ -4,7 +4,8 @@ using System.Collections;
 public class speech : MonoBehaviour {
 
     basic_move playerScript;
-    public string[] passiveLines;
+    public string[] introLines;//only spoken when you first talk to character
+    public string[] passiveLines;//
     public string[] scaredLines;
     public string[] helpfulLines;
     delegate void Speech();
@@ -14,7 +15,7 @@ public class speech : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        talk = passive;
+        talk = introduction;
         isTalking = false;
         curLine = 0;
         playerScript = GameObject.Find("Player").GetComponent<basic_move>();
@@ -34,7 +35,13 @@ public class speech : MonoBehaviour {
         } else {
             startTalking();
         }
-        //send message[curLine] to message box
+        
+    }
+    void introduction() {
+        talkTemplate(introLines);
+        if (!isTalking) {//after the introduction go to passive speech
+            talk = passive;
+        }
     }
     void passive() {
         talkTemplate(passiveLines);
