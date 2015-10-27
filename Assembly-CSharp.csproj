@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\killer.cs" />
      <Compile Include="Assets\Scripts\meta_script.cs" />
      <Compile Include="Assets\Scripts\searchable.cs" />
+     <Compile Include="Assets\Scripts\speech.cs" />
      <Compile Include="Assets\Scripts\weapon.cs" />
      <Compile Include="Assets\basic_move.cs" />
  <Reference Include="UnityEngine.UI">
