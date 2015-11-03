@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\characters.cs" />
      <Compile Include="Assets\Scripts\clock_movement.cs" />
+     <Compile Include="Assets\Scripts\clue_list.cs" />
      <Compile Include="Assets\Scripts\clues.cs" />
      <Compile Include="Assets\Scripts\container.cs" />
      <Compile Include="Assets\Scripts\game_scripts.cs" />

@@ -75,18 +75,7 @@ public class game_scripts : MonoBehaviour {
     }
 
 
-    /// <summary>
-    /// Takes an integer and returns the appropriate item in string form
-    /// </summary>
-    /// <param name="num">Index number of the item</param>
-    /// <returns></returns>
-    public string item(int num) {
-        switch (num) {
-            case 1: return "a convenient plot device";
-            case 2: return "the murder weapon";
-            default: return "nothing";
-        }
-    }
+    
 
 
 

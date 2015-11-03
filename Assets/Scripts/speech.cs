@@ -8,8 +8,8 @@ public class speech : MonoBehaviour {
     public string[] passiveLines;//
     public string[] scaredLines;
     public string[] helpfulLines;
-    delegate void Speech();
-    Speech talk;
+    delegate void SpeechDelegate();
+    SpeechDelegate talk;
     bool isTalking;
     int curLine;
 
