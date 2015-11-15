@@ -20,7 +20,7 @@ public class Edge<T> : MonoBehaviour {
     /// </summary>
     /// <param name="firstNode"></param>
     /// <param name="otherNode"></param>
-    Edge(int firstNode, int otherNode) {
+    public Edge(int firstNode, int otherNode) {
         first = firstNode;
         second = otherNode;
         next = null;
@@ -32,7 +32,7 @@ public class Edge<T> : MonoBehaviour {
     /// <param name="firstNode"></param>
     /// <param name="otherNode"></param>
     /// <param name="relations"></param>
-    Edge(int firstNode, int otherNode,int relations) {
+    public Edge(int firstNode, int otherNode,int relations) {
         first = firstNode;
         second = otherNode;
         next = null;
@@ -40,20 +40,34 @@ public class Edge<T> : MonoBehaviour {
     }
 
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>Pointer to next</returns>
     public Edge<T> getNext() {
         return next;
     }
 
-
+    /// <summary>
+    /// Sets next pointer to user input 'next'
+    /// </summary>
+    /// <param name="next"></param>
     public void setNext(Edge<T> next) {
         this.next = next;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>First node index</returns>
     public int getFirst() {
         return first;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>Second node index</returns>
     public int getSecond() {
         return second;
     }
