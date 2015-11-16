@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GraphNodeList<T> : MonoBehaviour {
-    private GraphNode<T> first;
-    private GraphNode<T> last;
+public class GraphNodeList<T> {
+    private GraphNode<T>[] nodeArr;
     private int size;
+    private int maxSize;
 
-
-    GraphNodeList() {
-        first = null;
-        last = null;
+    /// <summary>
+    /// Creates a new, empty Graph Node list
+    /// </summary>
+    public GraphNodeList(int maxSize) {
+        nodeArr = new GraphNode<T>[maxSize];
         size = 0;
+        this.maxSize = maxSize;
     }
 
     int getSize() {
@@ -18,20 +20,31 @@ public class GraphNodeList<T> : MonoBehaviour {
     }
 
     public void addItem(T newItem) {
-        GraphNode<T> temp = new GraphNode<T>(getSize(), newItem);//create a temp variable with index at end
-        GraphNode<T> cur = first;//pointer to first variable
-        if (cur == first) {
+        if (size > maxSize) throw new System.Exception("Major error encountered. Matrix size larger than possible.");
+        if (size == maxSize) throw new System.Exception("Can't insert, matrix is full");
+        
 
-        }
-        for(int i=1;i< getSize(); i++) {
-            if (cur.getNext() == null) throw new System.Exception();
-            if(cur.getIndex() < cur.getNext().getIndex()) {
-                break;
-            }
-            cur = cur.getNext();
-        }
+
+        if (getItem(newItem.ToString())!=null)
+            throw new System.Exception("Object already exists");
+
+
+        nodeArr[getSize()] = new GraphNode<T>(getSize(), newItem);
+
         size++;
-        temp.getNext().setNext(cur.getNext());
-        cur.setNext(temp);
+    }
+
+
+    public GraphNode<T> getItem(int index) {
+        return nodeArr[index];
+    }
+
+    public GraphNode<T> getItem(string name) {
+        for(int i=0;i< size; i++) {
+            if (nodeArr[i].getData().ToString().Equals(name)) {
+                return nodeArr[i];
+            }
+        }
+        return null;
     }
 }

@@ -45,12 +45,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\NPC_Graph\Characters.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\Edge.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\EdgeList.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\Graph.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\GraphNode.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\GraphNodeList.cs" />
-     <Compile Include="Assets\Scripts\characters.cs" />
+     <Compile Include="Assets\Scripts\NPC_Graph\NPC_Calc.cs" />
+     <Compile Include="Assets\Scripts\NPC_Graph\Relationship.cs" />
      <Compile Include="Assets\Scripts\clock_movement.cs" />
      <Compile Include="Assets\Scripts\clue_list.cs" />
      <Compile Include="Assets\Scripts\clues.cs" />

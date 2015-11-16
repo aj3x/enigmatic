@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EdgeList<T> : MonoBehaviour {
+public class EdgeList<T> {
     /// <summary>
     /// Is the graph undirected
     /// </summary>
@@ -13,30 +13,40 @@ public class EdgeList<T> : MonoBehaviour {
 
 
     /// <summary>
-    /// 
+    /// Creates a new empty Edge List with a max size and can be either directed or undirected
     /// </summary>
     /// <param name="maxSize">Maximum number of nodes in graph</param>
     /// <param name="undirected">Is the graph undirected</param>
-    EdgeList(int maxSize,bool undirected) {
+    public EdgeList(int maxSize,bool undirected) {
         adjList = new Edge<T>[maxSize];
         this.undirected = undirected;
     }
 
 
 
-    public void addEdge(int first, int second) {
+    public Edge<T> addEdge(int first, int second) {
         Edge<T> cur = new Edge<T>(first, second);
         if (find(first, second) == null) {
             cur.setNext(adjList[first]);
             adjList[first] = cur;
-
-            if (undirected) {
-                addEdge(second, first);
+            if (undirected) {//undirected add edge going other way
+                cur = new Edge<T>(second, first);
+                cur.setNext(adjList[second]);
+                adjList[second] = cur;
+                cur = find(first, second);
             }
+            return cur;
 
         } else//throw exception if edge already exists
             throw new System.Exception("Edge already exists.");
         
+    }
+
+    public Edge<T> addEdge(int first, int second,int weight) {
+        Edge<T> temp = addEdge(first, second);
+        temp.setWeight(weight);
+        setWeight(second, first, weight);
+        return temp;
     }
 
     /// <summary>
@@ -51,6 +61,19 @@ public class EdgeList<T> : MonoBehaviour {
             cur = cur.getNext();
         }
         return cur;
+    }
+
+
+
+    public void setWeight(int first, int second, int weight) {
+        Edge<T> temp = find(first, second);
+        if (temp == null) throw new System.Exception("No edge from " + first + " to " + second);
+        temp.setWeight(weight);
+
+        if (this.undirected) {
+            temp = find(second, first);
+            temp.setWeight(weight);
+        }
     }
 
     void inversePoint(Edge<T> pointer) {

@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Edge<T> : MonoBehaviour {
+public class Edge<T> {
     int first;
     int second;
 
     Edge<T> next;
 
+    T data;
     int relationship;
 
 
@@ -70,5 +71,27 @@ public class Edge<T> : MonoBehaviour {
     /// <returns>Second node index</returns>
     public int getSecond() {
         return second;
+    }
+
+
+
+
+    public int getWeight() {
+        return relationship;
+    }
+
+    public void setWeight(int weight) {
+        relationship = weight;
+    }
+
+
+
+    public T getData() {
+        return data;
+    }
+
+
+    public void setData(T Data) {
+        data = Data;
     }
 }

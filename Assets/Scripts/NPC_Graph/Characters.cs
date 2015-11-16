@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-public class characters : MonoBehaviour {
+//ScriptableObject
+public class Characters {
     string firstName;
     int mySeed;//values to determine what this character's going to do
     int loyalty;//sets how likely they are to help you
@@ -13,14 +13,10 @@ public class characters : MonoBehaviour {
     bool isDead;//is this character dead
 
 	// Use this for initialization
-	void Start () {
+	public Characters (string name) {
+        firstName = name;
         loyalty = 0;
         fear = 0;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 
@@ -36,5 +32,9 @@ public class characters : MonoBehaviour {
     }
 
 
+    override
+    public string ToString() {
+        return firstName;
+    }
     
 }

@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 
-public class GraphNode<T> : MonoBehaviour,IComparable<GraphNode<T>> {
+public class GraphNode<T> : IComparable<GraphNode<T>> {
 
     private int index;
     private T data;
@@ -12,15 +12,6 @@ public class GraphNode<T> : MonoBehaviour,IComparable<GraphNode<T>> {
     public GraphNode(int i, T item) {
         index = i;
         data = item;
-    }
-
-
-    public GraphNode<T> getNext() {
-        return next;
-    }
-
-    public void setNext(GraphNode<T> temp) {
-        next = temp;
     }
 
     public T getData() {
@@ -46,5 +37,14 @@ public class GraphNode<T> : MonoBehaviour,IComparable<GraphNode<T>> {
         }else{
             return -1;
         }
+    }
+
+    /// <summary>
+    /// Compares this objects ToString to a targets ToString. 
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns>True if String are equal</returns>
+    public bool AreEqual(GraphNode<T> target) {
+        return this.getData().ToString().Equals(target.getData().ToString());
     }
 }
