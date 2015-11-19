@@ -6,6 +6,7 @@ public class speech : MonoBehaviour {
     basic_move playerScript;
     public string[] introLines;//only spoken when you first talk to character
     public string[] passiveLines;//
+    //quest line
     public string[] scaredLines;
     public string[] helpfulLines;
     delegate void SpeechDelegate();
@@ -18,7 +19,7 @@ public class speech : MonoBehaviour {
         talk = introduction;
         isTalking = false;
         curLine = 0;
-        playerScript = GameObject.Find("Player").GetComponent<basic_move>();
+        //playerScript = GameObject.Find("Player").GetComponent<basic_move>();
 	}
 	
 	// Update is called once per frame

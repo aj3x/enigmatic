@@ -62,4 +62,15 @@ public class Graph<TN,TE> {
     public string getName(int index) {
         return nodes.getItem(index).getData().ToString();
     }
+
+
+
+    public GraphNode<TN> findNode(int index) {
+        return nodes.getItem(index);
+    }
+
+
+    public Edge<TE> findEdge(int first,int second) {
+        return edges.find(first, second);
+    }
 }

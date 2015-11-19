@@ -11,14 +11,16 @@ public class meta_script : MonoBehaviour {
         DontDestroyOnLoad(transform.gameObject);
     }
     int difficulty;
-    public double seed;
+    private double seed;
 	void Start () {
         difficulty = -1;//difficulty has not been set yet
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	}
+	
+
+    public double GetSeed() {
+        return seed;
+    }
 
 
 

@@ -10,6 +10,10 @@ public class EdgeList<T> {
     /// Array list: Matrix points to each edge from index to node
     /// </summary>
     Edge<T>[] adjList;
+    /// <summary>
+    /// Maximum size of the edge list
+    /// </summary>
+    private int maxSize;
 
 
     /// <summary>
@@ -17,9 +21,10 @@ public class EdgeList<T> {
     /// </summary>
     /// <param name="maxSize">Maximum number of nodes in graph</param>
     /// <param name="undirected">Is the graph undirected</param>
-    public EdgeList(int maxSize,bool undirected) {
-        adjList = new Edge<T>[maxSize];
+    public EdgeList(int MaxSize,bool undirected) {
+        adjList = new Edge<T>[MaxSize];
         this.undirected = undirected;
+        maxSize = MaxSize;
     }
 
 
@@ -57,7 +62,7 @@ public class EdgeList<T> {
     /// <returns>null if not found, returns edge if found</returns>
     public Edge<T> find(int first,int second) {
         Edge<T> cur = adjList[first];
-        while (cur != null || cur.getSecond() != second) {
+        while (cur != null && cur.getSecond() != second) {
             cur = cur.getNext();
         }
         return cur;
@@ -65,6 +70,12 @@ public class EdgeList<T> {
 
 
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="first"></param>
+    /// <param name="second"></param>
+    /// <param name="weight"></param>
     public void setWeight(int first, int second, int weight) {
         Edge<T> temp = find(first, second);
         if (temp == null) throw new System.Exception("No edge from " + first + " to " + second);
@@ -76,7 +87,32 @@ public class EdgeList<T> {
         }
     }
 
-    void inversePoint(Edge<T> pointer) {
-        
+
+
+    /// <summary>
+    /// Gets the weight of the edge from first to second
+    /// </summary>
+    /// <param name="first">Index of first node</param>
+    /// <param name="second">Index of second node</param>
+    /// <returns>Weight of edge from first to second</returns>
+    public int getWeight(int first, int second) {
+        return find(first, second).getWeight();
+    }
+
+
+
+    /// <summary>
+    /// Does each node connect to every other, ignoring itself
+    /// </summary>
+    /// <returns></returns>
+    public bool isFull() {
+        for (int i = 0; i < maxSize; i++) {
+            for (int j = 0; j < maxSize; i++) {
+                if (i != j && find(i, j) == null) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
