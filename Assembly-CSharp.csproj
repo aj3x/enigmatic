@@ -45,6 +45,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\GameCamera.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\Characters.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\Edge.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\EdgeList.cs" />
@@ -55,6 +56,8 @@
      <Compile Include="Assets\Scripts\NPC_Graph\Relationship.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\weapon.cs" />
      <Compile Include="Assets\Scripts\PCtoNPC.cs" />
+     <Compile Include="Assets\Scripts\PlayerControl.cs" />
+     <Compile Include="Assets\Scripts\Transport.cs" />
      <Compile Include="Assets\Scripts\clock_movement.cs" />
      <Compile Include="Assets\Scripts\clue_list.cs" />
      <Compile Include="Assets\Scripts\clues.cs" />
