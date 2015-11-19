@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\NPC_Graph\NPC_Calc.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\Relationship.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\weapon.cs" />
+     <Compile Include="Assets\Scripts\PCtoNPC.cs" />
      <Compile Include="Assets\Scripts\clock_movement.cs" />
      <Compile Include="Assets\Scripts\clue_list.cs" />
      <Compile Include="Assets\Scripts\clues.cs" />

@@ -41,9 +41,16 @@ public class Characters {
     }
 
 
+    /// <summary>
+    /// Gets the current loyalty
+    /// </summary>
+    /// <returns></returns>
+    public int getLoyalty() {
+        return loyalty;
+    }
     ///can reveal information they have on other characters or themselves
-    public void useLoyalty(int num) {
-
+    public void offsetLoyalty(int num) {
+        loyalty += num;
     }
 
     /// <summary>

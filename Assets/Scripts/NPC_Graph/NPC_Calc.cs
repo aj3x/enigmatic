@@ -7,6 +7,7 @@ public class NPC_Calc : MonoBehaviour {
     double seed;
     int size;
     private Characters killer;
+    PCtoNPC interact;
 
     void Start() {
         size = 4;//change dependent on number of people
@@ -84,6 +85,7 @@ public class NPC_Calc : MonoBehaviour {
             return (percent - 30) * 55 / 60 + 30;
         }
     }
+
     /// <summary>
     /// Takes the seed and returns a modified version of it
     /// </summary>
@@ -179,6 +181,7 @@ public class NPC_Calc : MonoBehaviour {
     int askAbout(int first, int second) {
         return NPC_Graph.findEdge(first, second).getWeight() + (25 * hasMurderWeapon(second)) + (25 * hasMurderCategory(second));
     }
+
     /// <summary>
     /// returns value based on whether character has weapon
     /// -2 if has weapon
@@ -219,6 +222,18 @@ public class NPC_Calc : MonoBehaviour {
     }
 
     
+
+
+    void startQuest(int npcIndex) {
+        for(int i=0;i< size; i++) {
+            if (NPC_Graph.findEdge(npcIndex, i).getWeight() > 0) {
+                NPC_Graph.findNode(i).getData().offsetLoyalty(1);
+            } else {
+                NPC_Graph.findNode(i).getData().offsetLoyalty(-2);
+            }
+        }
+
+    }
 
 
 }
