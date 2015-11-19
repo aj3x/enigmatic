@@ -6,7 +6,6 @@ public class GraphNode<T> : IComparable<GraphNode<T>> {
 
     private int index;
     private T data;
-    private GraphNode<T> next;
 
 
     public GraphNode(int i, T item) {

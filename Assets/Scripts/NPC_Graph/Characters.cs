@@ -41,20 +41,32 @@ public class Characters {
     }
 
 
-    //can reveal information they have on other characters or themselves
+    ///can reveal information they have on other characters or themselves
     public void useLoyalty(int num) {
 
     }
 
-    
+    /// <summary>
+    /// Gets the weapon index of this NPC
+    /// </summary>
+    /// <returns></returns>
     public int getWeaponIndex() {
         return weap.getWeaponIndex();
     }
 
+
+    /// <summary>
+    /// returns the weapon name of this NPC
+    /// </summary>
+    /// <returns></returns>
     public string getWeapon() {
         return weap.getWeapon();
     }
 
+    /// <summary>
+    /// Gets the weapon category of this 
+    /// </summary>
+    /// <returns></returns>
     public int getWeaponCategory() {
         return weap.getWeaponCategory();
     }
@@ -67,6 +79,10 @@ public class Characters {
         isKiller = true;
     }
 
+    /// <summary>
+    /// Returns the name of the character
+    /// </summary>
+    /// <returns></returns>
     override
     public string ToString() {
         return firstName;

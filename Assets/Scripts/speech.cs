@@ -6,9 +6,9 @@ public class speech : MonoBehaviour {
     basic_move playerScript;
     public string[] introLines;//only spoken when you first talk to character
     public string[] passiveLines;//
-    //quest line
     public string[] scaredLines;
     public string[] helpfulLines;
+    public string[] questLines;
     delegate void SpeechDelegate();
     SpeechDelegate talk;
     bool isTalking;
@@ -16,16 +16,19 @@ public class speech : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        talk = introduction;
-        isTalking = false;
+        talk = introduction;//NPC Starts at introduction
+        isTalking = false;//Is not talking at first
         curLine = 0;
-        //playerScript = GameObject.Find("Player").GetComponent<basic_move>();
+        playerScript = GameObject.Find("Player").GetComponent<basic_move>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
 	
-	}
+
+
+    /// <summary>
+    /// Handles lines of string to display to console
+    /// </summary>
+    /// <param name="arr"></param>
     void talkTemplate(string []arr) {
         if (isTalking) {
             if(curLine < arr.Length) {
@@ -54,17 +57,34 @@ public class speech : MonoBehaviour {
         talkTemplate(helpfulLines);
     }
 
+
+    /// <summary>
+    /// Display dialog box
+    /// Disable movement script
+    /// </summary>
     void startTalking() {
         isTalking = true;
         playerScript.enabled = false;
     }
 
+
+    /// <summary>
+    /// Remove dialog box
+    /// Enable movement script
+    /// </summary>
     void stopTalking() {
         isTalking = false;
         playerScript.enabled = true;
         curLine = 0;
     }
 
+
+
+    /// <summary>
+    /// If the PC is looking at teh NPC chekc if the action button has been pressed
+    /// If so continues along talk delegate
+    /// </summary>
+    /// <param name="coll"></param>
     void OnTriggerEnter2D(Collider2D coll) {
         if (coll.tag.Equals("Player") && Input.GetButtonDown("Action")) {
             talk();

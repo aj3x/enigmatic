@@ -6,6 +6,7 @@ public class NPC_Calc : MonoBehaviour {
     Graph<Characters, Relationship> NPC_Graph;
     double seed;
     int size;
+    private Characters killer;
 
     void Start() {
         size = 4;//change dependent on number of people
@@ -18,7 +19,9 @@ public class NPC_Calc : MonoBehaviour {
         NPC_Graph.addItem(new Characters("Charlie", getSeedDigit(2)));
         NPC_Graph.addItem(new Characters("Delta", getSeedDigit(3)));
 
-        NPC_Graph.findNode(getSeedDigit(size)%size).getData().setKiller();
+        killer = NPC_Graph.findNode(getSeedDigit(size)%size).getData();
+        killer.setKiller();
+
 
         NPC_Graph.addEdge(0, 2, 100);
         NPC_Graph.addEdge(0, 1, 20);
@@ -32,6 +35,10 @@ public class NPC_Calc : MonoBehaviour {
         double jk;//deletion
         jk = 18306950871;//deletion
         double temp = modSeed(jk);//replace with seed
+
+        /*go through each edge checking if it's filled yet
+        * if not insert edge with seed determined weight
+        */
         for (int i = 0; i < NPC_Graph.getSize(); i++) {
             for(int j = 0; j < NPC_Graph.getSize(); j++) {
                 if(NPC_Graph.findEdge(i, j) == null && i!=j) {
@@ -184,9 +191,9 @@ public class NPC_Calc : MonoBehaviour {
     int hasMurderWeapon(int index) {
         Characters temp = NPC_Graph.findNode(index).getData();
         //person has murder weapon 
-        if (temp.getWeaponIndex() == getSeedDigit(0)) {//CHANGE TO GET MURDERWEAPON
+        if (temp.getWeaponIndex() == killer.getWeaponIndex()) {//CHANGE TO GET MURDERWEAPON
             return -2;
-        } else if (temp.getWeaponCategory() == temp.getWeaponCategory(getSeedDigit(0))) {//has weapon of same category
+        } else if (temp.getWeaponCategory() == killer.getWeaponCategory()) {//has weapon of same category
             return -1;
         } else {//doesn't have weapon
             return 1;
@@ -204,7 +211,7 @@ public class NPC_Calc : MonoBehaviour {
     /// </returns>
     int hasMurderCategory(int index) {
         Characters temp = NPC_Graph.findNode(index).getData();
-        if (temp.getWeaponCategory() == temp.getWeaponCategory(getSeedDigit(0))) {
+        if (temp.getWeaponCategory() == killer.getWeaponCategory()) {
             return -1;
         } else {
             return 1;
