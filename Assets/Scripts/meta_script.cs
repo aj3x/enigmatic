@@ -14,6 +14,10 @@ public class meta_script : MonoBehaviour {
     private double seed;
 	void Start () {
         difficulty = -1;//difficulty has not been set yet
+
+        //****remove the following LATER*********************
+        difficulty = 1;
+        seed = 91837423465;
 	}
 	
 	
@@ -84,7 +88,7 @@ public class meta_script : MonoBehaviour {
             GameObject.Find("Title").GetComponent<Text>().color = new Color(255, 0, 0);
         } else {
             setSeed();
-            Application.LoadLevel("UI");
+            Application.LoadLevel("castle");
         }
     }
 }

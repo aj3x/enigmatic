@@ -229,7 +229,7 @@ public class NPC_Calc : MonoBehaviour {
             if (NPC_Graph.findEdge(npcIndex, i).getWeight() > 0) {
                 NPC_Graph.findNode(i).getData().offsetLoyalty(1);
             } else {
-                NPC_Graph.findNode(i).getData().offsetLoyalty(-2);
+                NPC_Graph.findNode(i).getData().offsetLoyalty(-4);
             }
         }
 
