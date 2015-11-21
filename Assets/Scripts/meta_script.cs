@@ -10,7 +10,7 @@ public class meta_script : MonoBehaviour {
     void Awake() {
         DontDestroyOnLoad(transform.gameObject);
     }
-    int difficulty;
+    public int difficulty;
     private double seed;
 	void Start () {
         difficulty = -1;//difficulty has not been set yet

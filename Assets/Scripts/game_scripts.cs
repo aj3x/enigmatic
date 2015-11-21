@@ -34,7 +34,6 @@ public class game_scripts : MonoBehaviour {
 
         //get difficulty
         int diff = GameObject.Find("MetaController").GetComponent<meta_script>().getDifficulty();
-
         //adjust variables based on difficulty
         lives = (int)(1.5*diff);
         startTime = 12 * 3 + (diff * 12);
@@ -43,8 +42,8 @@ public class game_scripts : MonoBehaviour {
         clockScript = GameObject.Find("Clock").GetComponent<clock_movement>();
         clockScript.enabled = true;
         livesHUD = GameObject.Find("lifeText").GetComponent<Text>();
-       
 
+        clockScript.currentTime = startTime;
 
 
         

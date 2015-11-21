@@ -58,6 +58,15 @@ public class speech : MonoBehaviour {
     }
 
 
+    public void questTalking(string name,string clue) {
+        questLines = new string[4];
+        questLines[0] = "I've got something for you to do.";
+        questLines[1] = name + " has something I want you to find.";
+        questLines[2] = clue + " is stashed somewhere in the castle";
+        questLines[3] = "Come back with it and I'll make it worth your while.";
+        talkTemplate(questLines);
+    }
+
     /// <summary>
     /// Display dialog box
     /// Disable movement script

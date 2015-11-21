@@ -44,7 +44,7 @@ public class NPC_Calc : MonoBehaviour {
             for(int j = 0; j < NPC_Graph.getSize(); j++) {
                 if(NPC_Graph.findEdge(i, j) == null && i!=j) {
                                                   //Rating              // +/-
-                    NPC_Graph.addEdge(i, j, (int)((100 - temp % 100) * (temp%2*2-1) ));
+                    NPC_Graph.addEdge(i, j, getRelation((int)(100 - temp % 100)) * (int)(temp%2*2-1) );
                     temp /= 100;
                 }
             }
@@ -179,7 +179,7 @@ public class NPC_Calc : MonoBehaviour {
     /// <param name="second">index of second person</param>
     /// <returns></returns>
     int askAbout(int first, int second) {
-        return NPC_Graph.findEdge(first, second).getWeight() + (25 * hasMurderWeapon(second)) + (25 * hasMurderCategory(second));
+        return NPC_Graph.findEdge(first, second).getWeight() + (15 * hasMurderWeapon(second)) + (25 * hasMurderCategory(second));
     }
 
     /// <summary>

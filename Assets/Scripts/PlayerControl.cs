@@ -8,11 +8,13 @@ public class PlayerControl : MonoBehaviour
     public float speed;
 
     private CharacterController controller;
+    private PCtoNPC quest;
 
     void Start()
     {
 
         controller = GetComponent<CharacterController>();
+        quest = GetComponent<PCtoNPC>();
 
     }
 
@@ -45,6 +47,17 @@ public class PlayerControl : MonoBehaviour
         {
             transform.Translate(Vector2.right * speed * Time.deltaTime);
             transform.eulerAngles = new Vector3(0, 0);
+        }
+    }
+
+    void OnEnterCollision(Collision coll) {
+        if (coll.collider.tag.Equals("Talkable")) {
+            if (!quest.questing()) {
+                //quest.startQuest();
+                coll.collider.SendMessage("startTalking");
+            } else {
+                Debug.Log("WTF");
+            }
         }
     }
 }

@@ -17,8 +17,7 @@ public class PCtoNPC : MonoBehaviour {
 
 
     public void startQuest() {
-        if (!onQuest)
-            onQuest = true;
+        onQuest = true;
     }
     public void endQuest() {
         if (!onQuest)
