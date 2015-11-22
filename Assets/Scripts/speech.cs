@@ -3,7 +3,8 @@ using System.Collections;
 
 public class speech : MonoBehaviour {
 
-    basic_move playerScript;
+    PlayerControl playerScript;
+    game_scripts gameScripts;
     public string[] introLines;//only spoken when you first talk to character
     public string[] passiveLines;//
     public string[] scaredLines;
@@ -19,9 +20,19 @@ public class speech : MonoBehaviour {
         talk = introduction;//NPC Starts at introduction
         isTalking = false;//Is not talking at first
         curLine = 0;
-        playerScript = GameObject.Find("Player").GetComponent<basic_move>();
+        playerScript = GameObject.Find("Player").GetComponent<PlayerControl>();
+        gameScripts = GameObject.Find("GameController").GetComponent<game_scripts>();
 	}
 	
+
+
+    void Update() {
+        if(isTalking) {
+            if (Input.GetButtonDown("Action")) {
+                talk();
+            }
+        }
+    }
 	
 
 
@@ -32,6 +43,7 @@ public class speech : MonoBehaviour {
     void talkTemplate(string []arr) {
         if (isTalking) {
             if(curLine < arr.Length) {
+                gameScripts.showText(arr[curLine]);
                 curLine++;
             } else {
                 stopTalking();
@@ -74,6 +86,7 @@ public class speech : MonoBehaviour {
     void startTalking() {
         isTalking = true;
         playerScript.enabled = false;
+
     }
 
 
@@ -94,8 +107,8 @@ public class speech : MonoBehaviour {
     /// If so continues along talk delegate
     /// </summary>
     /// <param name="coll"></param>
-    void OnTriggerEnter2D(Collider2D coll) {
-        if (coll.tag.Equals("Player") && Input.GetButtonDown("Action")) {
+    void OnCollisionStay(Collision coll) {
+        if (coll.collider.tag.Equals("Player") && Input.GetButtonDown("Action")) {
             talk();
         }
     }

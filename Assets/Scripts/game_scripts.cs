@@ -18,6 +18,7 @@ public class game_scripts : MonoBehaviour {
     int startTime;
     clock_movement clockScript;
     GameObject textBlock;
+    GameObject textWall;
     Text livesHUD;
 
 
@@ -30,6 +31,7 @@ public class game_scripts : MonoBehaviour {
 	void Start () {
         //Find the Text object and close it
         textBlock = GameObject.Find("Text");
+        textWall = GameObject.Find("TextBack");
         closeText();
 
         //get difficulty
@@ -63,6 +65,7 @@ public class game_scripts : MonoBehaviour {
     public void showText(string message) {
         textBlock.GetComponent<Text>().text = message;
         textBlock.SetActive(true);
+        textWall.SetActive(true);
         
     }
 
@@ -71,6 +74,7 @@ public class game_scripts : MonoBehaviour {
     /// </summary>
     public void closeText() {
         textBlock.SetActive(false);
+        textWall.SetActive(false);
     }
 
 

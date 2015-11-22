@@ -15,7 +15,7 @@ public class meta_script : MonoBehaviour {
 	void Start () {
         difficulty = -1;//difficulty has not been set yet
 
-        //****remove the following LATER*********************
+        //*********************remove the following LATER*********************
         difficulty = 1;
         seed = 91837423465;
 	}

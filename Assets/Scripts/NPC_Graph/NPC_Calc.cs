@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NPC_Calc : MonoBehaviour {
+public class NPC_Calc : ScriptableObject {
 
     Graph<Characters, Relationship> NPC_Graph;
     double seed;
@@ -11,7 +11,7 @@ public class NPC_Calc : MonoBehaviour {
 
     void Start() {
         size = 4;//change dependent on number of people
-        seed = GetComponent<meta_script>().GetSeed();
+        seed = GameObject.Find("MetaController").GetComponent<meta_script>().GetSeed();
         NPC_Graph = new Graph<Characters, Relationship>(size, true);
 
         //Testing Variables

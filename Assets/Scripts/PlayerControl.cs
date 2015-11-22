@@ -50,11 +50,13 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    void OnEnterCollision(Collision coll) {
+    void OnCollisionStay(Collision coll) {
         if (coll.collider.tag.Equals("Talkable")) {
             if (!quest.questing()) {
                 //quest.startQuest();
-                coll.collider.SendMessage("startTalking");
+                if (Input.GetButtonDown("Action")) {
+                    coll.collider.SendMessage("startTalking");
+                }
             } else {
                 Debug.Log("WTF");
             }
