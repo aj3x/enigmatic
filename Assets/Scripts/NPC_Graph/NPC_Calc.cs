@@ -49,7 +49,7 @@ public class NPC_Calc : ScriptableObject {
                 }
             }
         }
-
+        interact = GameObject.Find("Player").GetComponent<PCtoNPC>();
         
 
         /*

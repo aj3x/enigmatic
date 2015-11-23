@@ -53,12 +53,13 @@ public class PlayerControl : MonoBehaviour
     void OnCollisionStay(Collision coll) {
         if (coll.collider.tag.Equals("Talkable")) {
             if (!quest.questing()) {
-                //quest.startQuest();
+                quest.startQuest(coll.collider.name);
+
                 if (Input.GetButtonDown("Action")) {
                     coll.collider.SendMessage("startTalking");
                 }
             } else {
-                Debug.Log("WTF");
+                Debug.Log("Already on quest");
             }
         }
     }

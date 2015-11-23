@@ -19,6 +19,7 @@ public class game_scripts : MonoBehaviour {
     clock_movement clockScript;
     GameObject textBlock;
     GameObject textWall;
+    GameObject buttons;
     Text livesHUD;
 
 
@@ -32,6 +33,7 @@ public class game_scripts : MonoBehaviour {
         //Find the Text object and close it
         textBlock = GameObject.Find("Text");
         textWall = GameObject.Find("TextBack");
+        buttons = GameObject.Find("Buttons");
         closeText();
 
         //get difficulty
@@ -44,6 +46,7 @@ public class game_scripts : MonoBehaviour {
         clockScript = GameObject.Find("Clock").GetComponent<clock_movement>();
         clockScript.enabled = true;
         livesHUD = GameObject.Find("lifeText").GetComponent<Text>();
+        
 
         clockScript.currentTime = startTime;
 
@@ -75,6 +78,14 @@ public class game_scripts : MonoBehaviour {
     public void closeText() {
         textBlock.SetActive(false);
         textWall.SetActive(false);
+        buttons.SetActive(false);
+    }
+
+    public void showOptions(string []arr) {
+        showText(arr[0]);
+        buttons.SetActive(true);
+        GameObject.Find("ButtonText0").GetComponent<Text>().text = arr[1];
+        GameObject.Find("ButtonText1").GetComponent<Text>().text = arr[2];
     }
 
 

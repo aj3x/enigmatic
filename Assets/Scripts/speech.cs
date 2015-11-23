@@ -14,11 +14,15 @@ public class speech : MonoBehaviour {
     SpeechDelegate talk;
     bool isTalking;
     int curLine;
+    bool choosing;
+    int sel;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         talk = introduction;//NPC Starts at introduction
         isTalking = false;//Is not talking at first
+        choosing = false;
+        sel = 0;
         curLine = 0;
         playerScript = GameObject.Find("Player").GetComponent<PlayerControl>();
         gameScripts = GameObject.Find("GameController").GetComponent<game_scripts>();
@@ -41,18 +45,31 @@ public class speech : MonoBehaviour {
     /// </summary>
     /// <param name="arr"></param>
     void talkTemplate(string []arr) {
+        talkTemplate(arr, arr.Length);
+    }
+    void talkTemplate(string []arr,int length) {
         if (isTalking) {
-            if(curLine < arr.Length) {
+            if (curLine < length) {
                 gameScripts.showText(arr[curLine]);
                 curLine++;
             } else {
                 stopTalking();
             }
         } else {
-            startTalking();
+            Debug.Log("Shouldn't get here");
         }
-        
     }
+    void talkRandLine(string[]arr) {
+        if (isTalking) {
+            curLine = Random.Range(0, arr.Length);
+            gameScripts.showText(arr[curLine]);
+            talk = stopTalking;
+        } else {
+            stopTalking();
+        }
+    }
+
+
     void introduction() {
         talkTemplate(introLines);
         if (!isTalking) {//after the introduction go to passive speech
@@ -60,17 +77,18 @@ public class speech : MonoBehaviour {
         }
     }
     void passive() {
-        talkTemplate(passiveLines);
+        //talkRandLine(passiveLines);
+        optionList(passiveLines);
     }
     void scared() {
-        talkTemplate(scaredLines);
+        talkRandLine(scaredLines);
     }
     void helpful() {
         talkTemplate(helpfulLines);
     }
 
 
-    public void questTalking(string name,string clue) {
+    void questTalking(string name,string clue) {
         questLines = new string[4];
         questLines[0] = "I've got something for you to do.";
         questLines[1] = name + " has something I want you to find.";
@@ -86,20 +104,33 @@ public class speech : MonoBehaviour {
     void startTalking() {
         isTalking = true;
         playerScript.enabled = false;
-
     }
 
 
     /// <summary>
     /// Remove dialog box
     /// Enable movement script
+    /// Set Line to 0
     /// </summary>
     void stopTalking() {
         isTalking = false;
         playerScript.enabled = true;
+        gameScripts.closeText();
         curLine = 0;
+        talk = passive;
     }
 
+
+    void showOptions() {
+        string[] arr;
+        arr = passiveLines;
+        optionList(arr);
+    }
+
+    void optionList(string[] arr) {
+        gameScripts.showOptions(arr);
+
+    }
 
 
     /// <summary>
@@ -109,7 +140,8 @@ public class speech : MonoBehaviour {
     /// <param name="coll"></param>
     void OnCollisionStay(Collision coll) {
         if (coll.collider.tag.Equals("Player") && Input.GetButtonDown("Action")) {
-            talk();
+            //startTalking();
+            //showOptions();
         }
     }
 
