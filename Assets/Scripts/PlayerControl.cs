@@ -18,6 +18,13 @@ public class PlayerControl : MonoBehaviour
 
     }
 
+    public string getQuestNPC() {
+        return quest.getName();
+    }
+    public bool isQuesting() {
+        return quest.questing();
+    }
+
     void Update()
     {
 
@@ -50,16 +57,21 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    void OnCollisionStay(Collision coll) {
-        if (coll.collider.tag.Equals("Talkable")) {
-            if (!quest.questing()) {
-                quest.startQuest(coll.collider.name);
-
-                if (Input.GetButtonDown("Action")) {
-                    coll.collider.SendMessage("startTalking");
+    void OnTriggerStay(Collider coll) {
+        if (Input.GetButtonDown("Action")) {
+            if (coll.tag.Equals("Talkable")) {
+                if (!quest.questing()) {
+                    quest.startQuest(coll.name);
+                    coll.SendMessage("startTalking");
+                } else {
+                    if(getQuestNPC() == coll.name) {
+                        coll.SendMessage("endQuest");
+                    } else {
+                        coll.SendMessage("busySpeech");
+                    }
                 }
-            } else {
-                Debug.Log("Already on quest");
+            }else if (coll.tag.Equals("Searchable")) {
+                coll.SendMessage("onSearch");
             }
         }
     }

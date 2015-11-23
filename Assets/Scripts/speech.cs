@@ -86,6 +86,15 @@ public class speech : MonoBehaviour {
     void helpful() {
         talkTemplate(helpfulLines);
     }
+    void busySpeech() {
+        string[] arr = {
+            "I can see your busy with "+ playerScript.getQuestNPC()+".",
+            "Talk to me when you're not busy already.",
+            "You can only help one person at a time.",
+            "Sorry, the script says you can only help one person at a time."
+        };
+        talkRandLine(arr);
+    }
 
 
     void questTalking(string name,string clue) {

@@ -12,8 +12,9 @@ public class game_scripts : MonoBehaviour {
         DontDestroyOnLoad(transform.gameObject);
     }
 
-    
+
     //standard variables
+    public bool cthulu = false;
     int lives;
     int startTime;
     clock_movement clockScript;

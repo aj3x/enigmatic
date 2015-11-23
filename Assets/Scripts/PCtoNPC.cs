@@ -9,10 +9,9 @@ public class PCtoNPC : MonoBehaviour {
         onQuest = false;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public string getName() {
+        return nameNPC;
+    }
 
     public void firstOption() {
         
@@ -32,6 +31,7 @@ public class PCtoNPC : MonoBehaviour {
             throw new System.Exception("Tried to end quest when not on one");
         onQuest = false;
         nameNPC = null;
+        //send message to npc quest completed
     }
 
     public bool questing() {
