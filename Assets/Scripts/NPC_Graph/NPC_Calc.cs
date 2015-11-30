@@ -1,33 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NPC_Calc : ScriptableObject {
+public class NPC_Calc : MonoBehaviour {
 
     Graph<Characters, Relationship> NPC_Graph;
+    public GameObject []characterList;
     double seed;
     int size;
-    private Characters killer;
-    PCtoNPC interact;
+    private GraphNode<Characters> killer;
+    public PCtoNPC toPC;
+    public SpeechGraph speech;
 
     void Start() {
-        size = 4;//change dependent on number of people
         seed = GameObject.Find("MetaController").GetComponent<meta_script>().GetSeed();
+        toPC = GameObject.Find("Player").GetComponent<PCtoNPC>();
+        //speech = new SpeechGraph();
+        if(gameObject.name.Equals("GameController"))
+            characterList = GameObject.Find("GameController").GetComponent<NPC_Calc>().characterList;
+
+        size = characterList.Length;//change dependent on number of people
         NPC_Graph = new Graph<Characters, Relationship>(size, true);
+        
+        for(int i=0;i< size; i++) {
+            NPC_Graph.addItem(new Characters(characterList[i].name, getSeedDigit(i)));
+        }
+        killer = NPC_Graph.findNode(0);
+        //killer.setKiller();
 
-        //Testing Variables
-        NPC_Graph.addItem(new Characters("Alpha",getSeedDigit(0)));
-        NPC_Graph.addItem(new Characters("Beta", getSeedDigit(1)));
-        NPC_Graph.addItem(new Characters("Charlie", getSeedDigit(2)));
-        NPC_Graph.addItem(new Characters("Delta", getSeedDigit(3)));
-
-        killer = NPC_Graph.findNode(getSeedDigit(size)%size).getData();
-        killer.setKiller();
-
-
+        /*
         NPC_Graph.addEdge(0, 2, 100);
         NPC_Graph.addEdge(0, 1, 20);
         NPC_Graph.addEdge(0, 3, -20);
-
+        */
 
 
 
@@ -49,7 +53,7 @@ public class NPC_Calc : ScriptableObject {
                 }
             }
         }
-        interact = GameObject.Find("Player").GetComponent<PCtoNPC>();
+        toPC = GameObject.Find("Player").GetComponent<PCtoNPC>();
         
 
         /*
@@ -112,13 +116,13 @@ public class NPC_Calc : ScriptableObject {
 
 
     /// <summary>
-    /// Returns the index of the person to reveal from neighbours and self
-    /// changes category depending on whether to reveal weapon or category
+    /// Returns the index of the person to reveal from neighbours and self.
+    /// Changes to negative if category is to be revealed
     /// </summary>
     /// <param name="guy">index of npc that's talking</param>
     /// <param name="category">empty bool that changes based on result</param>
     /// <returns></returns>
-    public int revealPerson(int guy, bool category) {
+    public int revealPerson(int guy) {
         int []best = new int[6];
 
         best[0] = hasMurderWeapon(guy) * 100;
@@ -142,13 +146,13 @@ public class NPC_Calc : ScriptableObject {
         }
         for (int i = 0; i < 6; i++) {
             if (reveal[NPC_Graph.findNode(guy).getData().numReveals] == best[i]) {
-                if (i % 2 == 0) {
-                    category = false;
-                } else {
-                    category = true;
-                }
                 NPC_Graph.findNode(guy).getData().addReveal();
-                return (guy + i + 9) % 10;
+                if (i % 2 == 0) {
+                    return (guy + i + 9) % 10;
+                } else {
+                    return -(guy + i + 9) % 10;
+                }
+                
             }
         }
 
@@ -178,7 +182,7 @@ public class NPC_Calc : ScriptableObject {
     /// <param name="first">index of first person</param>
     /// <param name="second">index of second person</param>
     /// <returns></returns>
-    int askAbout(int first, int second) {
+    public int askAbout(int first, int second) {
         return NPC_Graph.findEdge(first, second).getWeight() + (15 * hasMurderWeapon(second)) + (25 * hasMurderCategory(second));
     }
 
@@ -194,9 +198,9 @@ public class NPC_Calc : ScriptableObject {
     int hasMurderWeapon(int index) {
         Characters temp = NPC_Graph.findNode(index).getData();
         //person has murder weapon 
-        if (temp.getWeaponIndex() == killer.getWeaponIndex()) {//CHANGE TO GET MURDERWEAPON
+        if (temp.getWeaponIndex() == killer.getData().getWeaponIndex()) {//CHANGE TO GET MURDERWEAPON
             return -2;
-        } else if (temp.getWeaponCategory() == killer.getWeaponCategory()) {//has weapon of same category
+        } else if (temp.getWeaponCategory() == killer.getData().getWeaponCategory()) {//has weapon of same category
             return -1;
         } else {//doesn't have weapon
             return 1;
@@ -214,22 +218,37 @@ public class NPC_Calc : ScriptableObject {
     /// </returns>
     int hasMurderCategory(int index) {
         Characters temp = NPC_Graph.findNode(index).getData();
-        if (temp.getWeaponCategory() == killer.getWeaponCategory()) {
+        if (temp.getWeaponCategory() == killer.getData().getWeaponCategory()) {
             return -1;
         } else {
             return 1;
         }
     }
 
+
+    public int findIndex(string name) {
+        return NPC_Graph.getIndex(name);
+    }
+    public string findName(int index) {
+        return NPC_Graph.getName(index);
+    }
+    public int relation(int first, int second) {
+        return NPC_Graph.findEdge(first,second).getWeight();
+    }
     
 
-
-    void startQuest(int npcIndex) {
+    /// <summary>
+    /// Adjusts other NPC's loyalty according to 
+    /// </summary>
+    /// <param name="npcIndex">Index of NPC, PC is doing quest for</param>
+    public void startQuest(int npcIndex) {
         for(int i=0;i< size; i++) {
-            if (NPC_Graph.findEdge(npcIndex, i).getWeight() > 0) {
-                NPC_Graph.findNode(i).getData().offsetLoyalty(1);
-            } else {
-                NPC_Graph.findNode(i).getData().offsetLoyalty(-4);
+            if (npcIndex != i) {
+                if (NPC_Graph.findEdge(npcIndex, i).getWeight() > 0) {
+                    NPC_Graph.findNode(i).getData().offsetLoyalty(1);
+                } else {
+                    NPC_Graph.findNode(i).getData().offsetLoyalty(-4);
+                }
             }
         }
 

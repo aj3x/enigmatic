@@ -36,9 +36,16 @@ public class GraphNodeList<T> {
 
 
     public GraphNode<T> getItem(int index) {
+        if (index < 0 || index >= getSize())
+            throw new System.Exception("Index out of bounds.");
         return nodeArr[index];
     }
-
+    /// <summary>
+    /// Returns the node of string name
+    /// Returns null if not found
+    /// </summary>
+    /// <param name="name">Name of node</param>
+    /// <returns></returns>
     public GraphNode<T> getItem(string name) {
         for(int i=0;i< size; i++) {
             if (nodeArr[i].getData().ToString().Equals(name)) {

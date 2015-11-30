@@ -61,8 +61,23 @@ public class EdgeList<T> {
     /// <param name="second">index of second node</param>
     /// <returns>null if not found, returns edge if found</returns>
     public Edge<T> find(int first,int second) {
+        if (first < 0 || first >= maxSize || second < 0 || second >= maxSize)
+            throw new System.Exception("First is out of bounds");
         Edge<T> cur = adjList[first];
         while (cur != null && cur.getSecond() != second) {
+            cur = cur.getNext();
+        }
+        return cur;
+    }
+    /// <summary>
+    /// Finds first edge from index node to another with same weight
+    /// </summary>
+    /// <param name="index">Node from which to find weight out</param>
+    /// <param name="weight">Weight to be found</param>
+    /// <returns></returns>
+    public Edge<T> findWeight(int index, int weight) {
+        Edge<T> cur = adjList[index];
+        while(cur != null && cur.getWeight() != weight) {
             cur = cur.getNext();
         }
         return cur;

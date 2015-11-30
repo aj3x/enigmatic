@@ -42,9 +42,9 @@ public class Edge<T> {
 
 
     /// <summary>
-    /// 
+    /// Pointer to next
     /// </summary>
-    /// <returns>Pointer to next</returns>
+    /// <returns></returns>
     public Edge<T> getNext() {
         return next;
     }
@@ -58,17 +58,17 @@ public class Edge<T> {
     }
 
     /// <summary>
-    /// 
+    /// First node index
     /// </summary>
-    /// <returns>First node index</returns>
+    /// <returns></returns>
     public int getFirst() {
         return first;
     }
 
     /// <summary>
-    /// 
+    /// Second node index
     /// </summary>
-    /// <returns>Second node index</returns>
+    /// <returns></returns>
     public int getSecond() {
         return second;
     }

@@ -7,14 +7,10 @@ public class clock_movement : MonoBehaviour {
     public int currentTime;
     public GameObject hour_hand;
     public GameObject min_hand;
-    game_scripts gameScripts;
-    GameObject gameController;
 	// Use this for initialization
 	void Start () {
         //get objects and scripts
-        gameController = GameObject.Find("GameController");
-        gameScripts = gameController.GetComponent<game_scripts>();
-        currentTime = gameScripts.getStartTime();
+        currentTime = GameObject.Find("GameController").GetComponent<game_scripts>().getStartTime();
 
 
         updateTime();

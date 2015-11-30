@@ -21,6 +21,7 @@ public class game_scripts : MonoBehaviour {
     GameObject textBlock;
     GameObject textWall;
     GameObject buttons;
+    public GameObject dropdown;
     Text livesHUD;
 
 
@@ -35,6 +36,7 @@ public class game_scripts : MonoBehaviour {
         textBlock = GameObject.Find("Text");
         textWall = GameObject.Find("TextBack");
         buttons = GameObject.Find("Buttons");
+        dropdown = GameObject.Find("Dropdown");
         closeText();
 
         //get difficulty
@@ -58,6 +60,9 @@ public class game_scripts : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        /*if (cthulu) {
+            GameObject.Find("Daylight").SetActive(false);
+        }*/
 	}
 
     //Text functions
@@ -80,13 +85,13 @@ public class game_scripts : MonoBehaviour {
         textBlock.SetActive(false);
         textWall.SetActive(false);
         buttons.SetActive(false);
+        dropdown.SetActive(false);
     }
 
-    public void showOptions(string []arr) {
-        showText(arr[0]);
-        buttons.SetActive(true);
-        GameObject.Find("ButtonText0").GetComponent<Text>().text = arr[1];
-        GameObject.Find("ButtonText1").GetComponent<Text>().text = arr[2];
+    public void showOptions(string item) {
+        dropdown.SetActive(true);
+        dropdown.GetComponent<Dropdown>().options.Clear();
+        dropdown.GetComponent<Dropdown>().options.Add(new Dropdown.OptionData());
     }
 
 

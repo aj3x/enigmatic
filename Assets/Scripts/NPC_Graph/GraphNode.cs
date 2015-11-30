@@ -46,4 +46,9 @@ public class GraphNode<T> : IComparable<GraphNode<T>> {
     public bool AreEqual(GraphNode<T> target) {
         return this.getData().ToString().Equals(target.getData().ToString());
     }
+
+    override
+    public string ToString() {
+        return data.ToString();
+    }
 }

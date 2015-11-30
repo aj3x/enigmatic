@@ -8,21 +8,12 @@ public class PlayerControl : MonoBehaviour
     public float speed;
 
     private CharacterController controller;
-    private PCtoNPC quest;
 
     void Start()
     {
 
         controller = GetComponent<CharacterController>();
-        quest = GetComponent<PCtoNPC>();
 
-    }
-
-    public string getQuestNPC() {
-        return quest.getName();
-    }
-    public bool isQuesting() {
-        return quest.questing();
     }
 
     void Update()
@@ -57,22 +48,5 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider coll) {
-        if (Input.GetButtonDown("Action")) {
-            if (coll.tag.Equals("Talkable")) {
-                if (!quest.questing()) {
-                    quest.startQuest(coll.name);
-                    coll.SendMessage("startTalking");
-                } else {
-                    if(getQuestNPC() == coll.name) {
-                        coll.SendMessage("endQuest");
-                    } else {
-                        coll.SendMessage("busySpeech");
-                    }
-                }
-            }else if (coll.tag.Equals("Searchable")) {
-                coll.SendMessage("onSearch");
-            }
-        }
-    }
+    
 }

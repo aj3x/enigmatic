@@ -12,10 +12,9 @@ public class container : MonoBehaviour {
 	    clueList = GameObject.Find("GameController").GetComponent<clue_list>();
     }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public void setItem(int num) {
+        item = num;
+    }
 
     /// <summary>
     /// Displays contents of container in message dialog

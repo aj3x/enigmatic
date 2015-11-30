@@ -55,6 +55,8 @@
      <Compile Include="Assets\Scripts\NPC_Graph\GraphNodeList.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\NPC_Calc.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\Relationship.cs" />
+     <Compile Include="Assets\Scripts\NPC_Graph\SpeechData.cs" />
+     <Compile Include="Assets\Scripts\NPC_Graph\SpeechGraph.cs" />
      <Compile Include="Assets\Scripts\NPC_Graph\weapon.cs" />
      <Compile Include="Assets\Scripts\PCtoNPC.cs" />
      <Compile Include="Assets\Scripts\PlayerControl.cs" />
