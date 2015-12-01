@@ -14,7 +14,7 @@ public class NPC_Calc : MonoBehaviour {
     void Start() {
         seed = GameObject.Find("MetaController").GetComponent<meta_script>().GetSeed();
         toPC = GameObject.Find("Player").GetComponent<PCtoNPC>();
-        //speech = new SpeechGraph();
+        speech = gameObject.GetComponent<SpeechGraph>();
         if(gameObject.name.Equals("GameController"))
             characterList = GameObject.Find("GameController").GetComponent<NPC_Calc>().characterList;
 

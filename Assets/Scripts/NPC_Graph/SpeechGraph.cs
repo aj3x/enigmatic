@@ -91,7 +91,6 @@ public class SpeechGraph : MonoBehaviour {
         graph.addEdge("quest", "decline", 1);
         graph.addEdge("accept", "close", 0);
         graph.addEdge("decline", "close", 0);
-        graph.addEdge("accept", "close", 0);
 
     }
 
@@ -99,10 +98,8 @@ public class SpeechGraph : MonoBehaviour {
     /// Goes to next node in the graph.
     /// </summary>
     public void goToNext() {
-        if (curNode.getData().isQuestion())
-            throw new System.Exception("Tried to go forward on a question without response");
 
-        PCtoNPC temp = gameObject.GetComponent<PCtoNPC>();
+        PCtoNPC temp = GameObject.Find("Player").GetComponent<PCtoNPC>();
         //special case
         /*
         0 Quest node
@@ -119,16 +116,20 @@ public class SpeechGraph : MonoBehaviour {
                     num++;
                 } else {
                     num += 2;
-                    if(temp.getQuestNPC() == temp.getTalkNPC()) {
+                    if (temp.getQuestNPC() == temp.getTalkNPC()) {
                         num++;
                         if (temp.isQuestDone()) {
                             num++;
                         }
                     }
                 }
+            } else if (temp.getTalkNPC().Equals("Butler")) {
+                num = 2;
             }
+
             goToNext(num);
         } else {
+            
             goToNext(0);
         }
     }
@@ -137,8 +138,6 @@ public class SpeechGraph : MonoBehaviour {
     /// </summary>
     /// <param name="num"></param>
     public void goToNext(int num) {
-        if (!curNode.getData().isQuestion())
-            throw new System.Exception("Tried to make chose on a statement");
         curNode = graph.findNodeWeight(curNode.ToString(), num);
     }
 
@@ -159,5 +158,9 @@ public class SpeechGraph : MonoBehaviour {
     }
     public string[] getLines() {
         return curNode.getData().getLines();
+    }
+
+    public string getName() {
+        return curNode.ToString();
     }
 }

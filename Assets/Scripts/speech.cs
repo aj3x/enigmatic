@@ -52,11 +52,13 @@ public class speech : MonoBehaviour {
     }
     void talkTemplate(string []arr,int length) {
         if (isTalking) {
-            if (curLine < length) {
+            if (curLine < length) {//We are in the middle of a speech
                 gameScripts.showText(arr[curLine]);
                 curLine++;
-            } else {
+            } else if (aiGraph.speech.getName().Equals("close")) {//at end of tree
                 stopTalking();
+            } else {
+                aiGraph.speech.goToNext();
             }
         } else {
             Debug.Log("Shouldn't get here");
@@ -75,7 +77,9 @@ public class speech : MonoBehaviour {
             stopTalking();
         }
     }
-
+    void questionTemplate() {
+        
+    }
 
     //For Delegate
     void helpful() {
@@ -96,17 +100,7 @@ public class speech : MonoBehaviour {
     }
 
 
-    void questStart() {
-        if (name != "Butler") {//Butler can't give quest
-            if (aiGraph.toPC.questing()) {//already on a quest
-                talk = busySpeech;//
-            } else {
-                
-            }
-        } else {//butler goes to helpful instead of giving quests
-            talk = helpful;
-        }
-    }
+    
     public void quest() {
         //aiGraph.toPC.startQuest();
         aiGraph.startQuest(aiGraph.findIndex(name));
@@ -162,14 +156,19 @@ public class speech : MonoBehaviour {
     
     void keepTalking() {
         if (aiGraph.speech.isQuestion()) {
-
+            
+            this.gameScripts.showText("LOLZ");
+            gameScripts.showOptions(aiGraph.speech.getLines());
+            aiGraph.speech.goToNext();
         } else {
             talkTemplate(aiGraph.speech.getLines());
-            aiGraph.speech.goToNext();
         }
     }
     
-
+    public void response(int num) {
+        aiGraph.speech.goToNext(num);
+        talk();
+    }
 
 
     

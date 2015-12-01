@@ -49,8 +49,8 @@ public class EdgeList<T> {
 
     public Edge<T> addEdge(int first, int second,int weight) {
         Edge<T> temp = addEdge(first, second);
-        temp.setWeight(weight);
-        setWeight(second, first, weight);
+        setWeight(first, second, weight);
+
         return temp;
     }
 

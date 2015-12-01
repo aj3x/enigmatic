@@ -88,10 +88,21 @@ public class game_scripts : MonoBehaviour {
         dropdown.SetActive(false);
     }
 
-    public void showOptions(string item) {
+    public void showOptions(string[] items) {
         dropdown.SetActive(true);
+        buttons.SetActive(true);
         dropdown.GetComponent<Dropdown>().options.Clear();
-        dropdown.GetComponent<Dropdown>().options.Add(new Dropdown.OptionData());
+
+        showText(items[0]);
+        for (int i = 1; i < items.Length; i++) {
+            dropdown.GetComponent<Dropdown>().options.Add(new Dropdown.OptionData(items[i]));
+            closeOptions();
+        }
+    }
+
+    public void closeOptions() {
+        dropdown.SetActive(false);
+        buttons.SetActive(false);
     }
 
 

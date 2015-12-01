@@ -81,4 +81,10 @@ public class PCtoNPC : MonoBehaviour {
             }
         }
     }
+
+    public void respond() {
+        if (talkNPC == null)
+            throw new System.Exception("Should have NPC that is currently talking.");
+        GameObject.Find(getTalkNPC()).GetComponent<speech>().response(0);//GameObject.Find("GameController").GetComponent<Dropdown>().value);
+    }
 }
