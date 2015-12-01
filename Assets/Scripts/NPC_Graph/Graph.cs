@@ -143,6 +143,8 @@ public class Graph<TN,TE> {
         return this.findNode(findNodeWeight(findNode(name).getIndex(), weight));
     }
     public int findNodeWeight(int index, int weight) {
+        if (this.edges.findWeight(index, weight) == null)
+            return -1;
         return this.edges.findWeight(index, weight).getSecond();
     }
 }

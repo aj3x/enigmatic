@@ -124,7 +124,7 @@ public class SpeechGraph : MonoBehaviour {
                     }
                 }
             } else if (temp.getTalkNPC().Equals("Butler")) {
-                num = 2;
+                num = 1;
             }
 
             goToNext(num);
@@ -139,6 +139,10 @@ public class SpeechGraph : MonoBehaviour {
     /// <param name="num"></param>
     public void goToNext(int num) {
         curNode = graph.findNodeWeight(curNode.ToString(), num);
+        if(curNode == null) {
+            Debug.Log("Went to null node resetting graph");
+            goToRoot();
+        }
     }
 
     public void goToRoot() {

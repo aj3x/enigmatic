@@ -6,6 +6,7 @@ public class speech : MonoBehaviour {
     PlayerControl playerScript;
     game_scripts gameScripts;
     NPC_Calc aiGraph;
+    public SpeechGraph speechGraph;
     public string[] introLines;//only spoken when you first talk to character
     public string[] passiveLines;//
     public string[] scaredLines;
@@ -28,14 +29,15 @@ public class speech : MonoBehaviour {
         curLine = 0;
         playerScript = GameObject.Find("Player").GetComponent<PlayerControl>();
         gameScripts = GameObject.Find("GameController").GetComponent<game_scripts>();
-        aiGraph = gameObject.GetComponent<NPC_Calc>();
-	}
+        aiGraph = GameObject.Find("GameController").GetComponent<NPC_Calc>();
+        speechGraph = gameObject.GetComponent<SpeechGraph>();
+    }
 	
 
 
     void Update() {
         if(isTalking) {
-            if (Input.GetButtonDown("Action")) {
+            if (Input.GetButtonDown("Action") && !speechGraph.isQuestion()) {
                 talk();
             }
         }
@@ -52,13 +54,15 @@ public class speech : MonoBehaviour {
     }
     void talkTemplate(string []arr,int length) {
         if (isTalking) {
+            Debug.Log(curLine + "<" + length+" NAME:"+speechGraph.getName());
             if (curLine < length) {//We are in the middle of a speech
                 gameScripts.showText(arr[curLine]);
                 curLine++;
-            } else if (aiGraph.speech.getName().Equals("close")) {//at end of tree
+            } else if (speechGraph.getName().Equals("close")) {//at end of tree
                 stopTalking();
             } else {
-                aiGraph.speech.goToNext();
+                speechGraph.goToNext();
+                talk();
             }
         } else {
             Debug.Log("Shouldn't get here");
@@ -76,9 +80,6 @@ public class speech : MonoBehaviour {
         } else {
             stopTalking();
         }
-    }
-    void questionTemplate() {
-        
     }
 
     //For Delegate
@@ -150,23 +151,23 @@ public class speech : MonoBehaviour {
         gameScripts.closeText();
         aiGraph.toPC.setTalkNPC(null);
         curLine = 0;
-        aiGraph.speech.goToRoot();
+        speechGraph.goToRoot();
     }
 
     
     void keepTalking() {
-        if (aiGraph.speech.isQuestion()) {
+        if (speechGraph.isQuestion()) {
             
-            this.gameScripts.showText("LOLZ");
-            gameScripts.showOptions(aiGraph.speech.getLines());
-            aiGraph.speech.goToNext();
+            gameScripts.showOptions(speechGraph.getLines());
+            //aiGraph.speech.goToNext();
         } else {
-            talkTemplate(aiGraph.speech.getLines());
+            talkTemplate(speechGraph.getLines());
         }
     }
     
     public void response(int num) {
-        aiGraph.speech.goToNext(num);
+        speechGraph.goToNext(num);
+        gameScripts.closeOptions();
         talk();
     }
 

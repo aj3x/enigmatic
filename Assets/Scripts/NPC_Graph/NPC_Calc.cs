@@ -9,14 +9,11 @@ public class NPC_Calc : MonoBehaviour {
     int size;
     private GraphNode<Characters> killer;
     public PCtoNPC toPC;
-    public SpeechGraph speech;
 
     void Start() {
         seed = GameObject.Find("MetaController").GetComponent<meta_script>().GetSeed();
         toPC = GameObject.Find("Player").GetComponent<PCtoNPC>();
-        speech = gameObject.GetComponent<SpeechGraph>();
-        if(gameObject.name.Equals("GameController"))
-            characterList = GameObject.Find("GameController").GetComponent<NPC_Calc>().characterList;
+        characterList = gameObject.GetComponent<NPC_Calc>().characterList;
 
         size = characterList.Length;//change dependent on number of people
         NPC_Graph = new Graph<Characters, Relationship>(size, true);

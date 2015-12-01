@@ -96,7 +96,6 @@ public class game_scripts : MonoBehaviour {
         showText(items[0]);
         for (int i = 1; i < items.Length; i++) {
             dropdown.GetComponent<Dropdown>().options.Add(new Dropdown.OptionData(items[i]));
-            closeOptions();
         }
     }
 
