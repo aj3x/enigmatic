@@ -9,7 +9,7 @@ public class SpeechGraph : MonoBehaviour {
 	// Use this for initialization
 	public void Start () {
         //build graph
-        graph = new Graph<SpeechData, string>(10,false);
+        graph = new Graph<SpeechData, string>(15,false);
         string[] arr;// = gameObject.GetComponent<speech>().introLines;
 
         
@@ -26,19 +26,19 @@ public class SpeechGraph : MonoBehaviour {
         arr = new string[] {
             "Quest Accepted"
         };
-        graph.addItem(new SpeechData(arr, "accept", false));
+        graph.addItem(new SpeechData(gameObject.GetComponent<speech>().questLines, "accept", false));
 
         //Decline quest
         arr = new string[] {
             "Quest Declined"
         };
-        graph.addItem(new SpeechData(arr, "decline", false));
+        graph.addItem(new SpeechData(arr, "decline", false, true));
 
         //Close
         arr = new string[] {
             "See you later."
         };
-        graph.addItem(new SpeechData(arr, "close", false));
+        graph.addItem(new SpeechData(arr, "close", false, true));
 
         //Help
         arr = new string[] {
@@ -48,21 +48,40 @@ public class SpeechGraph : MonoBehaviour {
 
         //Busy
         arr = new string[] {
-            "I see you're busy."
+            "I see you're busy.",
+            "You're already on a job.",
+            "You can't help me if you're helping someone else.",
+            "Sorry, the script says you can only help one person at a time."
         };
-        graph.addItem(new SpeechData(arr, "busy", false));
+        graph.addItem(new SpeechData(arr, "busy", false, true));
 
         //Complain
         arr = new string[] {
-            "Well you should get back on the job."
+            "Well you should get back on the job.",
+            "You still don't have it!"
         };
-        graph.addItem(new SpeechData(arr, "complain", false));
+        graph.addItem(new SpeechData(arr, "complain", false, true));
 
         //Congrat
         arr = new string[] {
-            "Great job!"
+            "Great job!",
+            "Thanks a lot!"
         };
-        graph.addItem(new SpeechData(arr, "congrat", false));
+        graph.addItem(new SpeechData(arr, "congrat", false, true));
+
+        //Reveal
+        arr = new string[] {
+            "Person has weapon format"
+        };
+        graph.addItem(new SpeechData(arr, "reveal", false));
+
+        //Hope
+        arr = new string[] {
+            "Hope that helps.",
+            "Glad to be of some help.",
+            "Good Luck"
+        };
+        graph.addItem(new SpeechData(arr, "hope", false, true));
 
 
         //Intro Lines
@@ -70,7 +89,7 @@ public class SpeechGraph : MonoBehaviour {
         curNode = graph.findNode("intro");
 
         //Passive Lines
-        graph.addItem(new SpeechData(gameObject.GetComponent<speech>().passiveLines, "passive", false));
+        graph.addItem(new SpeechData(gameObject.GetComponent<speech>().passiveLines, "passive", false, true));
 
         //edges
         graph.addEdge("intro", "passive", 0);
@@ -85,7 +104,9 @@ public class SpeechGraph : MonoBehaviour {
         graph.addEdge("busy", "close", 0);
         graph.addEdge("complain", "close", 0);
         //CHANGE UNDER LATER**************************
-        graph.addEdge("congrat", "close", 0);
+        graph.addEdge("congrat", "reveal", 0);
+        graph.addEdge("reveal", "hope", 0);
+        graph.addEdge("hope", "close", 0);
 
         graph.addEdge("quest", "accept", 0);
         graph.addEdge("quest", "decline", 1);
@@ -115,7 +136,7 @@ public class SpeechGraph : MonoBehaviour {
                 if (temp.getQuestNPC().Equals("Butler")) {
                     num++;
                 } else {
-                    num += 2;
+                    num = 2;
                     if (temp.getQuestNPC() == temp.getTalkNPC()) {
                         num++;
                         if (temp.isQuestDone()) {
@@ -129,7 +150,6 @@ public class SpeechGraph : MonoBehaviour {
 
             goToNext(num);
         } else {
-            
             goToNext(0);
         }
     }
@@ -139,7 +159,11 @@ public class SpeechGraph : MonoBehaviour {
     /// <param name="num"></param>
     public void goToNext(int num) {
         curNode = graph.findNodeWeight(curNode.ToString(), num);
-        if(curNode == null) {
+        if (curNode.ToString().Equals("accept")) {//player acccepts quest
+            GameObject.Find(gameObject.name).GetComponent<speech>().quest();
+            GameObject.Find("Player").GetComponent<PCtoNPC>().startQuest(gameObject.name);
+        }
+        if (curNode == null) {
             Debug.Log("Went to null node resetting graph");
             goToRoot();
         }
@@ -156,11 +180,14 @@ public class SpeechGraph : MonoBehaviour {
     public bool isQuestion() {
         return curNode.getData().isQuestion();
     }
-
-    public string getLine(int index) {
-        return curNode.getData().getLine(index);
-    }
+    
     public string[] getLines() {
+        if (curNode.getData().isSingle()) {
+            int num = Random.Range(0, curNode.getData().getLines().Length);
+            if (num >= curNode.getData().getLines().Length) //get some weird error where there is nothing show it
+                return new string[0];
+            return curNode.getData().getLine(num);
+        }
         return curNode.getData().getLines();
     }
 

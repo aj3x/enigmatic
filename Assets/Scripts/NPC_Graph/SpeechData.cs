@@ -20,14 +20,18 @@ public class SpeechData {
         singleLine = single;
     }
 
+    public bool isSingle() {
+        return singleLine;
+    }
     public bool isQuestion() {
         return question;
     }
     public string[] getLines() {
         return lines;
     }
-    public string getLine(int index) {
-        return lines[index];
+    public string[] getLine(int index) {
+        string [] temp = {lines[index] };
+        return temp;
     }
     public void setLines(string[] newLines) {
         lines = newLines;

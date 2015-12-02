@@ -7,10 +7,12 @@ public class NPC_Calc : MonoBehaviour {
     public GameObject []characterList;
     double seed;
     int size;
+    int revealSize;
     private GraphNode<Characters> killer;
     public PCtoNPC toPC;
 
     void Start() {
+        revealSize = 6;
         seed = GameObject.Find("MetaController").GetComponent<meta_script>().GetSeed();
         toPC = GameObject.Find("Player").GetComponent<PCtoNPC>();
         characterList = gameObject.GetComponent<NPC_Calc>().characterList;
@@ -111,50 +113,84 @@ public class NPC_Calc : MonoBehaviour {
     }
 
 
-
+    void swap(int[] arr,int i,int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
     /// <summary>
     /// Returns the index of the person to reveal from neighbours and self.
-    /// Changes to negative if category is to be revealed
+    /// Adds 10 if category is to be revealed
     /// </summary>
     /// <param name="guy">index of npc that's talking</param>
     /// <param name="category">empty bool that changes based on result</param>
     /// <returns></returns>
     public int revealPerson(int guy) {
-        int []best = new int[6];
+        int maxSize = 6;
+        int[] best = new int[maxSize];
 
         best[0] = hasMurderWeapon(guy) * 100;
         best[1] = hasMurderCategory(guy) * 100;
 
         int patsy = getNeighbour(false, guy);
-        best[2] = hasMurderWeapon(patsy) * NPC_Graph.findEdge(guy,patsy).getWeight();
+        best[2] = hasMurderWeapon(patsy) * NPC_Graph.findEdge(guy, patsy).getWeight();
         best[3] = hasMurderCategory(patsy) * NPC_Graph.findEdge(guy, patsy).getWeight();
 
         patsy = getNeighbour(true, guy);
-        best[4] = hasMurderWeapon(patsy) * NPC_Graph.findEdge(guy,patsy).getWeight();
+        best[4] = hasMurderWeapon(patsy) * NPC_Graph.findEdge(guy, patsy).getWeight();
         best[5] = hasMurderCategory(patsy) * NPC_Graph.findEdge(guy, patsy).getWeight();
 
-        int[] reveal = best;
-        for(int i = 0; i < 6; i++) {
-            for(int j = i; j < 6; j++) {
-                if (reveal[i] < reveal[j]) {
-                    reveal[i] = reveal[j];
-                }
-            }
+        int[] orderIndex = new int[maxSize];
+        for (int i = 0; i < maxSize; i++) {
+            orderIndex[i] = i;
         }
-        for (int i = 0; i < 6; i++) {
-            if (reveal[NPC_Graph.findNode(guy).getData().numReveals] == best[i]) {
-                NPC_Graph.findNode(guy).getData().addReveal();
-                if (i % 2 == 0) {
-                    return (guy + i + 9) % 10;
-                } else {
-                    return -(guy + i + 9) % 10;
+        for (int i = 0; i < maxSize; i++) {
+            for (int j = i + 1; j < maxSize; j++) {
+                if (best[i] < best[j]) {
+                    swap(best, i, j);
+                    swap(orderIndex, i, j);
                 }
-                
             }
         }
 
-        //something has gone wrong
-        return best[NPC_Graph.findNode(guy).getData().numReveals];
+        //can't reveal weapon and then weapon category
+        //this is infered from the weapon so 
+        //only reveal stuff player doesn't know
+        bool[] visited = new bool[maxSize/2];//initialize array half reveal
+        for(int i = 0; i < maxSize/2; i++) {
+            visited[i] = false;
+        }
+        int[] reveal = new int[maxSize];
+        revealSize = 0;
+
+        //go through array to sort
+        for(int i = 0; i < maxSize; i++) {
+            int person = orderIndex[i] / 2;//person pulled from weapon 
+
+            if (!visited[person]) {
+                reveal[revealSize] = orderIndex[i];
+                revealSize++;//hasn't been visited add to number of reveals
+                if (orderIndex[i] % 2 == 0) {//only set to visited once weapon is revealed
+                    visited[person] = true;
+                }
+            }
+        }
+
+        //save the index of reveal
+        
+        int revealIndex = NPC_Graph.findNode(guy).getData().numReveals;
+        //
+        if (revealIndex >= revealSize)
+            return -1;
+
+        int index = reveal[revealIndex];
+        NPC_Graph.findNode(guy).getData().addReveal();
+            if (index % 2 == 0) {
+                return (guy + index/2 + 9) % 10;
+            } else {
+                return (guy + index/2 + 9) % 10+10;
+            }
+            
 
 
     }

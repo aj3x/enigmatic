@@ -41,11 +41,10 @@ public class PCtoNPC : MonoBehaviour {
     }*/
 
 
-    public void startQuest() {
+    public void startQuest(string name) {
+        setQuestNPC(name);
         onQuest = true;
         questDone = false;
-        GameObject.Find(getQuestNPC()).GetComponent<speech>().quest();
-        GameObject.Find("Buttons").SetActive(false);
     }
     public void endQuest() {
         if (!onQuest)
@@ -65,18 +64,8 @@ public class PCtoNPC : MonoBehaviour {
     void OnTriggerStay(Collider coll) {
         if (Input.GetButtonDown("Action")) {
             if (coll.tag.Equals("Talkable")) {
-                if (!questing()) {
-                    talkNPC = coll.name;
-                    coll.SendMessage("startTalking");
-                } else {
-                    if (questNPC == coll.name && questDone) {
-                        coll.SendMessage("endQuest");
-                    } else if (this.name == coll.name) {
-                        //do nothing
-                    } else {
-                        coll.SendMessage("busySpeech");
-                    }
-                }
+                talkNPC = coll.name;//on start talking save npc's name
+                coll.SendMessage("startTalking");
             } else if (coll.tag.Equals("Searchable")) {
                 coll.SendMessage("onSearch");
             }

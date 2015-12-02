@@ -37,7 +37,7 @@ public class speech : MonoBehaviour {
 
     void Update() {
         if(isTalking) {
-            if (Input.GetButtonDown("Action") && !speechGraph.isQuestion()) {
+            if (Input.GetButtonDown("Action")) {// && !speechGraph.isQuestion()) {
                 talk();
             }
         }
@@ -54,18 +54,19 @@ public class speech : MonoBehaviour {
     }
     void talkTemplate(string []arr,int length) {
         if (isTalking) {
-            Debug.Log(curLine + "<" + length+" NAME:"+speechGraph.getName());
+            //Debug.Log(curLine+"<"+length+" "+speechGraph.getName());
             if (curLine < length) {//We are in the middle of a speech
                 gameScripts.showText(arr[curLine]);
                 curLine++;
             } else if (speechGraph.getName().Equals("close")) {//at end of tree
                 stopTalking();
             } else {
+                curLine = 0;
                 speechGraph.goToNext();
                 talk();
             }
         } else {
-            Debug.Log("Shouldn't get here");
+            Debug.LogError("Shouldn't get here");
         }
     }
     /// <summary>
@@ -103,10 +104,9 @@ public class speech : MonoBehaviour {
 
     
     public void quest() {
-        //aiGraph.toPC.startQuest();
         aiGraph.startQuest(aiGraph.findIndex(name));
-        questTalking(aiGraph.findName(Mathf.Abs(aiGraph.revealPerson(aiGraph.findIndex(name)))), " A CONVENIENT PLOT DEVICE");
-        
+        questTalking(" A CONVENIENT PLOT DEVICE");
+        speechGraph.setNodeArr("accept", questLines);
     }
 
     /// <summary>
@@ -121,13 +121,13 @@ public class speech : MonoBehaviour {
     /// </summary>
     /// <param name="name">Name of person to reveal</param>
     /// <param name="clue">Clue to look for</param>
-    void questTalking(string name,string clue) {
+    void questTalking(string clue) {
         questLines = new string[4];
         questLines[0] = "I've got something for you to do.";
-        questLines[1] = name + " has something I want you to find.";
+        questLines[1] = "Someone has something I want you to find.";
         questLines[2] = clue + " is stashed somewhere in the castle";
         questLines[3] = "Come back with it and I'll make it worth your while.";
-        talkTemplate(questLines);
+        //talkTemplate(questLines);
     }
 
     /// <summary>
@@ -159,7 +159,6 @@ public class speech : MonoBehaviour {
         if (speechGraph.isQuestion()) {
             
             gameScripts.showOptions(speechGraph.getLines());
-            //aiGraph.speech.goToNext();
         } else {
             talkTemplate(speechGraph.getLines());
         }
@@ -168,7 +167,7 @@ public class speech : MonoBehaviour {
     public void response(int num) {
         speechGraph.goToNext(num);
         gameScripts.closeOptions();
-        talk();
+        //talk();
     }
 
 
