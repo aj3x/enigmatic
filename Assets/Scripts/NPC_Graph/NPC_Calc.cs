@@ -38,7 +38,19 @@ public class NPC_Calc : MonoBehaviour {
         //replace jk with seed for actual gameplay later***********************************************************************
         double jk;//deletion
         jk = 18306950871;//deletion
-        double temp = modSeed(jk);//replace with seed
+        seed = jk;//deletion
+        double temp = modSeed(seed);
+        //initialize array to 0
+        int[] tempArr = new int[5];
+        for (int i = 0; i < 5; i++) {
+            tempArr[i] = 0;
+        }
+        //set each characters role accordingly
+        for (int i = 0; i < 10; i++) {
+            int num = (int)(temp / Mathf.Pow(100, i) % 100);
+            tempArr[num%5]++;
+            NPC_Graph.findNode(i).getData().setRole(num%5);
+        }
 
         /*go through each edge checking if it's filled yet
         * if not insert edge with seed determined weight
@@ -46,13 +58,17 @@ public class NPC_Calc : MonoBehaviour {
         for (int i = 0; i < NPC_Graph.getSize(); i++) {
             for(int j = 0; j < NPC_Graph.getSize(); j++) {
                 if(NPC_Graph.findEdge(i, j) == null && i!=j) {
-                                                  //Rating              // +/-
+                                                              //Rating              // +/-
                     NPC_Graph.addEdge(i, j, getRelation((int)(100 - temp % 100)) * (int)(temp%2*2-1) );
                     temp /= 100;
+                    if (temp < 1) {
+                        temp = modSeed2(seed);
+                    }
                 }
             }
         }
         toPC = GameObject.Find("Player").GetComponent<PCtoNPC>();
+        
         
 
         /*
@@ -100,6 +116,10 @@ public class NPC_Calc : MonoBehaviour {
     private double modSeed(double num) {
         double multiplier = 130796182357;//large prime number
         return (num + multiplier) * multiplier;
+    }
+    private double modSeed2(double num) {
+        double multiplier = 130796182357;
+        return (num - multiplier) * multiplier;
     }
 
 

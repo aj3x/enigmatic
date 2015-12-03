@@ -70,6 +70,13 @@ public class Characters {
         return weap.getWeapon();
     }
 
+    public void setRole(int num) {
+        ability = num;
+    }
+    public int getRole() {
+        return ability;
+    }
+
     /// <summary>
     /// Gets the weapon category of this 
     /// </summary>
