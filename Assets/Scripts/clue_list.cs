@@ -10,6 +10,7 @@ public class clue_list : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         usedClues = new int[numClues];
+        hidingSpots = GameObject.FindGameObjectsWithTag("Searchable");
     }
 	
 	// Update is called once per frame
