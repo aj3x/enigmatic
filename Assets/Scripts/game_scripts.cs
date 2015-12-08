@@ -128,9 +128,9 @@ public class game_scripts : MonoBehaviour {
         if (lives > 0) {
             lives--;
             livesHUD.text = "x" + lives;
-            //game partial reset
+            Application.LoadLevel("castle");
         } else {
-            //gameOver
+            Application.LoadLevel("lose");
         }
     }
 }

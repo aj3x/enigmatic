@@ -8,7 +8,7 @@ public class NPC_Calc : MonoBehaviour {
     double seed;
     int size;
     int revealSize;
-    private GraphNode<Characters> killer;
+    public GraphNode<Characters> killer;
     public PCtoNPC toPC;
 
     void Start() {
@@ -35,10 +35,7 @@ public class NPC_Calc : MonoBehaviour {
 
 
 
-        //replace jk with seed for actual gameplay later***********************************************************************
-        double jk;//deletion
-        jk = 18306950871;//deletion
-        seed = jk;//deletion
+        
         double temp = modSeed(seed);
         //initialize array to 0
         int[] tempArr = new int[5];

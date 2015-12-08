@@ -83,6 +83,19 @@ public class SpeechGraph : MonoBehaviour {
         };
         graph.addItem(new SpeechData(arr, "hope", false, true));
 
+        arr = new string[] {
+            "Accuse this person?",
+            "GUILTY!!",
+            "NOT GUILTY...YET"
+        };
+        graph.addItem(new SpeechData(arr, "accuse", true));
+
+        arr = new string[] {
+            "This person is...",
+            ""
+        };
+        graph.addItem(new SpeechData(arr, "end", false));
+
 
         //Intro Lines
         graph.addItem(new SpeechData(gameObject.GetComponent<speech>().introLines, "intro", false));
@@ -92,7 +105,10 @@ public class SpeechGraph : MonoBehaviour {
         graph.addItem(new SpeechData(gameObject.GetComponent<speech>().passiveLines, "passive", false, true));
 
         //edges
-        graph.addEdge("intro", "passive", 0);
+        graph.addEdge("intro", "accuse", 0);
+
+        graph.addEdge("accuse", "end", 0);
+        graph.addEdge("accuse", "passive", 1);
 
         graph.addEdge("passive", "quest", 0);
         graph.addEdge("passive", "help", 1);
@@ -121,6 +137,20 @@ public class SpeechGraph : MonoBehaviour {
     public void goToNext() {
 
         PCtoNPC temp = GameObject.Find("Player").GetComponent<PCtoNPC>();
+
+        if (curNode.ToString().Equals("end")) {
+
+            string[] tempArr = {
+                gameObject.name+" is...",
+                "not the killer."
+            };
+
+            if (GameObject.Find("GameController").GetComponent<NPC_Calc>().killer.ToString().Equals(gameObject.ToString())) {
+                tempArr[1] = "the killer. Congrats!";
+                Application.LoadLevel("win");
+            }
+            GameObject.Find("GameController").GetComponent<game_scripts>().loseLife();
+        }
         //special case
         /*
         0 Quest node
@@ -160,8 +190,11 @@ public class SpeechGraph : MonoBehaviour {
     public void goToNext(int num) {
         curNode = graph.findNodeWeight(curNode.ToString(), num);
         if (curNode.ToString().Equals("accept")) {//player acccepts quest
-            GameObject.Find(gameObject.name).GetComponent<speech>().quest();
+            gameObject.GetComponent<speech>().quest();
             GameObject.Find("Player").GetComponent<PCtoNPC>().startQuest(gameObject.name);
+        }
+        if (curNode.ToString().Equals("congrats")) {//player beat quest
+            GameObject.Find("Player").GetComponent<PCtoNPC>().endQuest();
         }
         if (curNode == null) {
             Debug.Log("Went to null node resetting graph");

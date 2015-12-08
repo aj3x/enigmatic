@@ -16,6 +16,10 @@ public class PCtoNPC : MonoBehaviour {
         questDone = false;
         //sel = GameObject.Find("Dropdown").GetComponent<Dropdown>();
 	}
+
+    public void setQuestDone() {
+        questDone = true;
+    }
 	
 	public string getQuestNPC() {
         return questNPC;
@@ -52,6 +56,7 @@ public class PCtoNPC : MonoBehaviour {
         onQuest = false;
         questDone = false;
         questNPC = null;
+
         //send message to npc quest completed
     }
 
