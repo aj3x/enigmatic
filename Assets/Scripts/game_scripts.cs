@@ -133,4 +133,11 @@ public class game_scripts : MonoBehaviour {
             Application.LoadLevel("lose");
         }
     }
+
+    public void loseTime(int num) {
+        clock_movement temp = GameObject.Find("Clock").GetComponent<clock_movement>();
+        temp.addTime(num);
+        if (temp.timeLeft() <= 0) 
+            GameObject.Find("Player").GetComponent<PCtoNPC>().startQuest("no time left");
+    }
 }

@@ -11,6 +11,9 @@ public class clue_list : MonoBehaviour {
 	void Start () {
         usedClues = new int[numClues];
         hidingSpots = GameObject.FindGameObjectsWithTag("Searchable");
+        for(int i = 0; i < hidingSpots.Length; i++) {
+            hidingSpots[i].AddComponent<container>();
+        }
     }
 	
 	// Update is called once per frame

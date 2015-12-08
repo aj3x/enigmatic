@@ -138,6 +138,12 @@ public class SpeechGraph : MonoBehaviour {
 
         PCtoNPC temp = GameObject.Find("Player").GetComponent<PCtoNPC>();
 
+        //beats quest lose time
+        if (curNode.ToString().Equals("congrat")) {
+            game_scripts gameTemp = GameObject.Find("GameController").GetComponent<game_scripts>();
+            gameTemp.loseTime(4);
+        }
+
         if (curNode.ToString().Equals("end")) {
 
             string[] tempArr = {
@@ -203,7 +209,7 @@ public class SpeechGraph : MonoBehaviour {
     }
 
     public void goToRoot() {
-        curNode = graph.findNode("passive");
+        curNode = graph.findNode("accuse");
     }
 
 	public void setNodeArr(string name,string [] arr) {

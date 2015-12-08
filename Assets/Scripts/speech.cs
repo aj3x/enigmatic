@@ -88,6 +88,15 @@ public class speech : MonoBehaviour {
         talkTemplate(helpfulLines);
     }
     void busySpeech() {
+        if (aiGraph.toPC.getQuestNPC().Equals("noTime")) {
+            string[] arr = {
+                "Looks like your out of time.",
+                "Sorry, you don't have any time left.",
+                "Who's it gonna be."
+            };
+        talkRandLine(arr);
+        }
+
         if (Random.Range(0, 3) == 0) {
             string[] arr = {
                 "I can see your busy with " + aiGraph.toPC.getQuestNPC() + ".",
